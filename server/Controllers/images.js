@@ -25,7 +25,38 @@ const getImages= async (req, res)=> {
     }
 }
 
+ const updateImage = async(req,res)=>{
+    const { id } = req.params
+    const { Url } = req.body
+  
+    try {
+      const updated = await Image.update(
+        { Url},
+        { where: { id } }
+      )
+        res.status(200).send(updated);
+     
+    } 
+    catch (error) {
+      console.error(error);
+      res.status(404).send(error);
+    }
+}
+
+ const deleteImage = async(req,res)=>{
+    try{
+       const  id=req.params.id
+        const image = await Image.destroy({where : { id:id}})
+        res.status(200).send(" product deleted successfully")
+    }
+    catch(err){
+        res.status(404).send(err)
+    }
+} 
+
 module.exports = {
     addImage,
-    getImages
+    getImages,
+    updateImage,
+    deleteImage
 }

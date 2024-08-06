@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             primaryKey: true
         },
-        // quantity: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        //     defaultValue: 1,
-        // }
+        quantity: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1,
+        }
     })
     return Cart
 } 

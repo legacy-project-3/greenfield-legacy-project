@@ -89,13 +89,13 @@ module.exports ={
         
 
         if (products.length === 0) {
-            return res.status(404).json({ message: 'No products found for this user' });
+            return res.status(404).json({ message: 'No products found' });
         }
 
         res.status(200).send( products );
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: 'Error fetching products for user' });   
+        res.status(500).json({ message: 'Error fetching products' });   
     
 }
    },
