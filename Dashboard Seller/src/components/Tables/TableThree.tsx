@@ -10,8 +10,13 @@ import { Rating } from "@material-tailwind/react";
 
 
 
-const TableThree = ({id , firstName , lastName}: {id: string , firstName: string , lastName: string}) => {
+const TableThree = () => {
   const [products, setProducts] = useState<[]>([])
+
+  const fetchToken = async () => {
+    const token = localStorage.getItem('token');
+    console.log(token);
+  }
     
   
 
@@ -49,7 +54,7 @@ const handleDelete = async (id:string) => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        {firstName} {lastName}
+        {/* {firstName} {lastName} */}
       </h4>
 
       <div className="flex flex-col">
