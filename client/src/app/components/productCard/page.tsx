@@ -1,12 +1,13 @@
 'use client';
 import React from 'react';
 import { FaShoppingCart, FaRegEye, FaRegHeart } from 'react-icons/fa'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 import axios from 'axios'
+import { jwtDecode } from "jwt-decode"
 const ProductCard = ({ el }) => {
-  const router = useRouter()
-  
+  // const router = useRouter()
+  console.log('el',el.id)
   const renderRating = (rating:number) => {
     const totalStars = 5;
     const fullStars = Math.floor(rating);
@@ -34,12 +35,46 @@ const ProductCard = ({ el }) => {
     );
   };
 
+  const addToWhishlist = (id:number)=>{
+    const token =localStorage.getItem("token") 
+    const decodedToken = jwtDecode(token)
+    
+    const userid = decodedToken.userId
+  
+    axios.post("http://localhost:3001/whishlist/add", {
+      userId:userid ,
+      productId: id
+   }).then(()=>{
+    console.log("product added successfully to the whishlist")
+   }).catch((err)=>{
+    console.log(err)
+   })
+  }
+
+  const addToCart = (id: number) =>{
+    console.log("hello")
+    console.log("productId",id)
+    const token =localStorage.getItem("token") 
+    const decodedToken = jwtDecode(token)
+    
+    const userid = decodedToken.userId
+    axios.post("http://localhost:3001/cart/add", {
+      userId: userid,
+      productId: id
+    }).then(()=>{
+      console.log("product added successfully to the cart")
+    }).catch((err)=>{
+      console.log(err)
+    })
+  }
  
   return (
     <div className="w-[270px] h-[300px] bg-white shadow-lg overflow-hidden relative group">
       <div className="relative">
         <img className="w-full h-[180px] object-cover" src={el.image} alt={el.name} />
-        <button className="bg-black text-white font-bold py-2 px-4 absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <button className="bg-black text-white font-bold py-2 px-4 absolute bottom-0 left-0 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center" onClick={()=>{
+            console.log('here ')
+            addToCart(el.id)}}>
           Add To Cart <FaShoppingCart className="ml-2" />
         </button>
       </div>
@@ -51,7 +86,7 @@ const ProductCard = ({ el }) => {
           
         </div>
         <div className="bg-white rounded-full p-1 shadow-md">
-          <FaRegHeart className="text-gray-500 text-sm" />
+          <FaRegHeart className="text-gray-500 text-sm" onClick={()=>{addToWhishlist(el.id)}}/>
         </div>
       </div>
       <div className="p-4">

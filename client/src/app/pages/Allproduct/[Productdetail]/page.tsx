@@ -46,7 +46,7 @@ const Productdetail = () => {
   }
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/product/oneProduct/${id}`).then((res) => {
+    axios.get(`http://localhost:3001/product/oneProduct/${id}`).then((res:any) => {
       console.log("res", res.data);
       const prod: Product = res.data[0];
       const dataa: Prod = {

@@ -3,9 +3,10 @@ import React from "react";
 import axios from 'axios'
 import WhishCard from '../../components/WhishCard/page'
 import { useState, useEffect } from "react";
-import Navbar from "@/app/components/navbar/page";
+import Navbar from "../../components/navbar/page";
 import { useSearchParams } from "next/navigation";
-import ProductCard from "@/app/components/productCard/page";
+import ProductCard from "../../components/productCard/page";
+import { jwtDecode } from "jwt-decode"
 const Whishlist = () =>{
   const params = useSearchParams();
   const bestSelling = JSON.parse(params.get("bestSelling") || "")
@@ -53,7 +54,11 @@ const Whishlist = () =>{
       }
 
       useEffect(() => {
-        axios.get<ProdResponse[]>('http://localhost:3001/whishlist/whishOneuser/3')
+        const token =localStorage.getItem("token") 
+        const decodedToken = jwtDecode(token)
+        
+        const userid = decodedToken.userId 
+        axios.get<ProdResponse[]>(`http://localhost:3001/whishlist/whishOneuser/${userid}`)
           .then((res) => {
             const data: ProdResponse[] = res.data
             const newdata: newdataa[] = data.map((el)=>{
@@ -72,7 +77,7 @@ const Whishlist = () =>{
           .catch((error) => {
             console.error('Error fetching products:', error);
           });
-      }, []);
+      }, [refresh]);
     return <div>
       <Navbar/>
       <div style={{display: "flex", gap: "20px", marginLeft: "50px", marginTop:"100px" }}>

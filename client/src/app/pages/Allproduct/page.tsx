@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ProductCard from '@/app/components/productCard/page';
-import Navbar from '@/app/components/navbar/page';
+import ProductCard from '../../components/productCard/page';
+import Navbar from '../../components/navbar/page';
 
 
 
