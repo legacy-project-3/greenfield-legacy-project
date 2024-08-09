@@ -39,9 +39,28 @@ const getCartforUser = async (req, res) => {
     }
 }
 
+const updateCartforUser = async (req, res) => {
+    const { id } = req.params
+    const { quantity} = req.body
+  
+    try {
+      const updated = await Cart.update(
+        {quantity},
+        { where: { id } }
+      )
+        res.status(200).send(updated);
+     
+    } 
+    catch (error) {
+      console.error(error);
+      res.status(500).send(error);
+    }
+
+}
 module.exports = {
     addCart,
     getAllCart,
-    getCartforUser
+    getCartforUser,
+    updateCartforUser
 
 }
