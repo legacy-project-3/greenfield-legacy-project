@@ -1,0 +1,176 @@
+.profile-container {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    width: 25%;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    margin: 5;
+  }
+  
+  .logo {
+    margin-bottom: 20px;
+  }
+  
+  .logo-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: #100f10;
+    text-decoration: none;
+  }
+  
+  .nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .nav ul li {
+    margin-bottom: 15px;
+  }
+  
+  .nav ul li  {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  .nav ul li.active {
+    color: #e53e3e;
+    font-weight: bold;
+  }
+  
+  
+  
+
+
+
+  .main-content {
+    width: 75%;
+    padding: 40px;
+    background-color: #fff;
+  }
+  
+  
+  
+  .welcome {
+    margin-top: 10px;
+    font-size: 10px;
+    text-align: right;
+  }
+  
+  .user-name {
+    color: #e53e3e;
+    text-decoration: none;
+  }
+  
+  .title {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #e53e3e;
+  }
+  
+  .form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 40px
+  }
+  
+ .form-group2 {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 40px
+ }
+
+  .form-control {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .form-control label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-control input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  
+  
+
+  .password-section {
+    margin-top: 40px;
+}
+
+.password-section h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group3 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+   
+
+
+
+
+
+
+
+  .cancel-button,
+  .save-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background-color: white;
+    color: #333;
+    float: right;
+  }
+  
+  .save-button {
+    background-color: #e53e3e;
+    color: white;
+    float: right;
+  }
+  
+  .cancel-button:hover,
+  .save-button:hover {
+    opacity: 0.9;
+  }
+  

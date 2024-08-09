@@ -10,41 +10,42 @@ import { Rating } from "@material-tailwind/react";
 
 
 
-const TableThree = () => {
+
+const TableThree:React.FC<{user:string}> = () => {
   const [products, setProducts] = useState<[]>([])
 
-  const fetchToken = async () => {
-    const token = localStorage.getItem('token');
-    console.log(token);
-  }
+ 
+  
+
+ 
     
   
 
-  const fetchProducts = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
-      const filteredUsers = response.data;
-      setProducts(filteredUsers);
+//   const fetchProducts = async () => {
+//     try {
+//       const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
+//       const filteredUsers = response.data;
+//       setProducts(filteredUsers);
       
-    } catch (error) {
-      console.error('Error fetching users:', error);
-    }
-  };
+//     } catch (error) {
+//       console.error('Error fetching users:', error);
+//     }
+//   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-console.log(products);
+//   useEffect(() => {
+//     fetchProducts();
+//   }, []);
+// console.log(products);
   
-const handleDelete = async (id:string) => {
-  try { 
-    const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
-    fetchProducts();
-    console.log(response);
-  } catch (error) {
-    console.error('Error deleting product:', error);
-  }
-}
+// const handleDelete = async (id:string) => {
+//   try { 
+//     const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
+//     fetchProducts();
+//     console.log(response);
+//   } catch (error) {
+//     console.error('Error deleting product:', error);
+//   }
+// }
  
   
  
