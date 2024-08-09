@@ -9,8 +9,8 @@ const whishlistrouter= require('./routes/Whishlistroute.js')
 const PORT = 3000;
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 app.use("/images", imageRouter)
 app.use('/category',categoryRoute)
 app.use('/product',productRoute)
