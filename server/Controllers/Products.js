@@ -1,4 +1,4 @@
-const {Product, Image}=require('../indexdatabase.js')
+const {Product, Image , Category}=require('../indexdatabase.js')
 
 module.exports ={
     getAllProduct : async(req,res)=>{
@@ -85,7 +85,7 @@ module.exports ={
 
     try {
        
-        const products = await Product.findAll({include:{model:Image}});
+        const products = await Product.findAll({include:[{model:Image},{model:Category}]});
         
 
         if (products.length === 0) {
