@@ -67,9 +67,9 @@ deleteUser= async (req, res) => {
             password: hashedPassword,
             role
         })
-        const token = jwt.sign({ userId: newuser.id }, 'this is my secret key', {
-            expiresIn: 3600,
-            })
+         const token = jwt.sign({ userId: newuser.id, role: newuser.role, email:newuser.email, address: newuser.address, firstName:newuser.firstName,lastname:newuser.lastname }, 'this is my secret key for our first senior project', {
+        expiresIn: 3600,
+        })
 
         res.status(201).json({token})
 
@@ -98,7 +98,7 @@ deleteUser= async (req, res) => {
         if (!passwordmatch) {
         return res.status(401).json({ error: 'Authentication failed' });
         }
-        const token = jwt.sign({ userId: user.id, role: user.role }, 'this is my secret key for our first senior project', {
+        const token = jwt.sign({ userId: user.id, role: user.role, email:user.email, address: user.address, firstName:user.firstName,lastname:user.lastname }, 'this is my secret key for our first senior project', {
         expiresIn: 3600,
         })
        

@@ -3,12 +3,14 @@
 import React ,{useState}from "react";
 
 import axios from'axios'
+import { jwtDecode } from "jwt-decode";
 
 function SignUp() {
 
 const [name,setname]=useState('')
 const [email,setemail]=useState('')
 const [password,setapassword]=useState('')
+var x :string
 
 
 
@@ -25,7 +27,11 @@ const handlesign = ()=>{
     
   }
   axios.post('http://127.0.0.1:3000/users/register',newuser)
-  .then((response)=>{
+  .then((response:any)=>{
+    localStorage.setItem("token",response.data.token)
+    x = jwtDecode(localStorage.getItem("token"))
+    console.log(x);
+    
 console.log(response);
 // console.log('success');
   })
