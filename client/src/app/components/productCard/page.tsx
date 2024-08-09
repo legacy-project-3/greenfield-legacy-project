@@ -41,7 +41,7 @@ const ProductCard = ({ el }) => {
     
     const userid = decodedToken.userId
   
-    axios.post("http://localhost:3001/whishlist/add", {
+    axios.post("http://localhost:5000/whishlist/add", {
       userId:userid ,
       productId: id
    }).then(()=>{
@@ -58,7 +58,7 @@ const ProductCard = ({ el }) => {
     const decodedToken = jwtDecode(token)
     
     const userid = decodedToken.userId
-    axios.post("http://localhost:3001/cart/add", {
+    axios.post("http://localhost:5000/cart/add", {
       userId: userid,
       productId: id
     }).then(()=>{

@@ -44,7 +44,7 @@ const LandingPage = () => {
     }
 
     useEffect(() => {
-        axios.get<Product[]>('http://localhost:3001/product/getprodpic')
+        axios.get<Product[]>('http://localhost:5000/product/getprodpic')
             .then((res) => {
                 const products: Product[] = res.data;
                 const data: Prod[] = products.map((el) => ({

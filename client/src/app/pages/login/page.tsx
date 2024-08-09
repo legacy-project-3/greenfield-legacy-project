@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const user = { email, password };
 
     axios
-      .post<UserResponse>("http://localhost:3001/users/login", user )
+      .post<UserResponse>("http://localhost:5000/users/login", user )
       .then((response) => {
         console.log(response);
         console.log("success");

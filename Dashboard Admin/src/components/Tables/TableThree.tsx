@@ -17,7 +17,7 @@ const TableThree = ({id , firstName , lastName}: {id: string , firstName: string
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:3000/product/prodimage/${id}`);
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
       const filteredUsers = response.data;
       setProducts(filteredUsers);
       
@@ -33,7 +33,7 @@ console.log(products);
   
 const handleDelete = async (id:string) => {
   try { 
-    const response = await axios.delete(`http://127.0.0.1:3000/product/delete/${id}`);
+    const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
     fetchProducts();
     console.log(response);
   } catch (error) {

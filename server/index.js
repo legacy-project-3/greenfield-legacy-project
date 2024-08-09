@@ -6,7 +6,7 @@ const userRoute = require("./routes/UserRout.js");
 const imageRouter= require('./routes/imageRoute.js')
 const cartRouter = require ('./routes/Cartroute.js')
 const whishlistrouter= require('./routes/Whishlistroute.js')
-const PORT = 3001
+const PORT = 5000;
 const app = express();
 
 app.use(cors());

@@ -35,7 +35,7 @@ const WishCard = ({ el, refresh, setRefresh }) => {
   
 
 const deleteFromList = (id)=>{
-  axios.delete(`http://localhost:3001/whishlist/delete/${id}`).then(()=>{
+  axios.delete(`http://localhost:5000/whishlist/delete/${id}`).then(()=>{
     console.log("item deleted successfully")
     setRefresh(!refresh)
   }).catch((err)=>{

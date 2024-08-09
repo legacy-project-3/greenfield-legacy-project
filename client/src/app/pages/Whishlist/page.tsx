@@ -58,7 +58,7 @@ const Whishlist = () =>{
         const decodedToken = jwtDecode(token)
         
         const userid = decodedToken.userId 
-        axios.get<ProdResponse[]>(`http://localhost:3001/whishlist/whishOneuser/${userid}`)
+        axios.get<ProdResponse[]>(`http://localhost:5000/whishlist/whishOneuser/${userid}`)
           .then((res) => {
             const data: ProdResponse[] = res.data
             const newdata: newdataa[] = data.map((el)=>{

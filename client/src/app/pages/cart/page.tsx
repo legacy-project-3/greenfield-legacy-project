@@ -61,7 +61,7 @@ const Cart = () => {
   
   const userid:number = decodedToken.userId 
   console.log("userid", userid)   
-  axios.get(`http://localhost:3001/cart/getOne/${userid}`)
+  axios.get(`http://localhost:5000/cart/getOne/${userid}`)
       .then((res) => {
         const dataa: Pro[] = res.data;
         const newdata: Res [] = dataa.map((el) => {
@@ -89,7 +89,7 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:3001/cart/delete/${id}`)
+          .delete(`http://localhost:5000/cart/delete/${id}`)
           .then(() => {
             setRefresh(!refresh);
             Swal.fire({
@@ -108,7 +108,7 @@ const Cart = () => {
   const updateQuantity = (itemid:number, newquantity:number) => {
     if (newquantity <= 0) return;
     axios
-      .put(`http://localhost:3001/cart/update/${itemid}`, {
+      .put(`http://localhost:5000/cart/update/${itemid}`, {
         quantity: newquantity,
       })
       .then(() => {
