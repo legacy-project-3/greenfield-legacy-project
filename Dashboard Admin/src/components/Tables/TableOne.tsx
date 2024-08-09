@@ -14,7 +14,7 @@ const TableOne = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3000/users/getAllUsers');
+      const response = await axios.get('http://127.0.0.1:5000/users/getAllUsers');
       setUsers(response.data.filter((user: any) => user.role !== "admin"));
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -31,6 +31,9 @@ const TableOne = () => {
       title: 'Are you sure?',
       text: `Do you want to change the status to ${status}?`,
       icon: 'warning',
+      background:'#1A4870',
+      color:'white',
+      width: "800px",
       showCancelButton: true,
       customClass: {
         confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded',
@@ -45,13 +48,17 @@ const TableOne = () => {
 
     if (result.isConfirmed) {
       try {
-        const response = await axios.put(`http://127.0.0.1:3000/users/update/${id}`, { status });
+        const response = await axios.put(`http://127.0.0.1:5000/users/update/${id}`, { status });
         console.log(response.data);
 
         await Swal.fire({
           title: 'Updated!',
           text: `The user status has been updated to ${status}.`,
           icon: 'success',
+          background:'#1A4870',
+          color:'white',
+          width: "800px",
+
           confirmButtonText: 'OK',
           customClass: {
             confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'
@@ -81,11 +88,15 @@ const TableOne = () => {
       title: 'Are you sure?',
       text: 'This action is irreversible!',
       icon: 'warning',
+      background:'#1A4870',
+      color:'white',
+      width: "800px",
       showCancelButton: true,
       customClass: {
         confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded',
         cancelButton: 'bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded'
       },
+      
       buttonsStyling: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'Cancel',
@@ -97,7 +108,7 @@ const TableOne = () => {
   
     if (result.isConfirmed) {
       try {
-        const response = await axios.delete(`http://127.0.0.1:3000/users/delete/${id}`);
+        const response = await axios.delete(`http://127.0.0.1:5000/users/delete/${id}`);
         fetchUsers();
         console.log("user deleted");
   
@@ -105,6 +116,9 @@ const TableOne = () => {
           title: 'Deleted!',
           text: 'The user has been deleted.',
           icon: 'success',
+          background:'#1A4870',
+          color:'white',
+          width: "800px",
           confirmButtonText: 'OK',
           customClass: {
             confirmButton: 'bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded'
@@ -134,6 +148,11 @@ const TableOne = () => {
       setCurrentPage(currentPage - 1);
     }
   };
+  const getRandomUserImage = () => {
+    const randomNum = Math.floor(Math.random() * 13) + 1;
+    return `/images/user/user-${randomNum}.png`;
+  };
+  
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -179,7 +198,7 @@ const TableOne = () => {
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
-                <Image src="/images/user/user-01.png" alt="User" width={48} height={48} />
+                <Image src={getRandomUserImage()} alt="User" width={48} height={48} />
               </div>
               <p className="hidden text-black dark:text-white sm:block">
                 {user.firstName} {user.lastname}
