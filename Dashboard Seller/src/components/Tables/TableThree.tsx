@@ -5,14 +5,25 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Rating } from "@material-tailwind/react";
+import {jwtDecode} from "jwt-decode";
+import Link from "next/link";
 
 
 
 
-
-
-const TableThree:React.FC<{user:string}> = () => {
+const TableThree:React.FC<> = () => {
   const [products, setProducts] = useState<[]>([])
+  const [id, setId] = useState<string>("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token){
+    const decodedToken:any = jwtDecode(token);
+    setId(decodedToken.id);
+      console.log(id);
+      
+    }
+    }, []);
 
  
   
@@ -21,31 +32,31 @@ const TableThree:React.FC<{user:string}> = () => {
     
   
 
-//   const fetchProducts = async () => {
-//     try {
-//       const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
-//       const filteredUsers = response.data;
-//       setProducts(filteredUsers);
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/15`);
+      const filteredUsers = response.data;
+      setProducts(filteredUsers);
       
-//     } catch (error) {
-//       console.error('Error fetching users:', error);
-//     }
-//   };
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
-//   useEffect(() => {
-//     fetchProducts();
-//   }, []);
-// console.log(products);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+console.log(products);
   
-// const handleDelete = async (id:string) => {
-//   try { 
-//     const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
-//     fetchProducts();
-//     console.log(response);
-//   } catch (error) {
-//     console.error('Error deleting product:', error);
-//   }
-// }
+const handleDelete = async (id:string) => {
+  try { 
+    const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
+    fetchProducts();
+    console.log(response);
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+}
  
   
  
@@ -54,8 +65,15 @@ const TableThree:React.FC<{user:string}> = () => {
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
-        {/* {firstName} {lastName} */}
+      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white flex justify-between items-center">
+        Product List
+        <Link href="http://localhost:3000/pages/addproduct">
+          <button className="bg-primary text-white p-2 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+        </Link>
       </h4>
 
       <div className="flex flex-col">
@@ -85,6 +103,7 @@ const TableThree:React.FC<{user:string}> = () => {
               Actions
             </h5>
           </div>
+        
         </div>
 
         {products.map((product: any) => (

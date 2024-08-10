@@ -17,7 +17,7 @@ const handlelogin = async () => {
   const newuser = {
     email: email,
     password: password,
-    role: "admin",
+    role: "seller",
     address: "address",
     firstName: name,
     lastname: "lastname",
