@@ -1,15 +1,31 @@
 
 const {Image} = require ("../indexdatabase.js")
+require('dotenv').config()
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const addImage = async (req, res)=>{
+   
     try {
-        const body= req.body
-        console.log("body", body)
-        const image = await Image.create(body)
-        res.status(200).send("image added successfully")
-    }
-    catch (error) {
-        res.status(500).send(error)
+        const picture = req.body.Url;
+        const uploaded = await cloudinary.uploader.upload(picture, {})
+        console.log(uploaded)
+        const imagesaved = await Image.create({
+            Url: uploaded.secure_url,
+            productId: req.body.productId
+        })
+        res.status(200).send({
+            message: "Image added successfully",
+            image: imagesaved
+        });
+    } catch (err) {
+        console.error("Error during image upload:", err)
+        res.status(500).send({ error: "Image upload failed", details: err.message })
     }
 }
 
