@@ -4,19 +4,40 @@ import { Product } from "@/types/product";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Rating } from "@material-tailwind/react";
+import {jwtDecode} from "jwt-decode";
 
 const TableTwo = () => {
   const [products, setProducts] = useState<[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
 
+  const [id, setId] = useState<string>("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(token){
+    const decodedToken:any = jwtDecode(token);
+    setId(decodedToken.id);
+      console.log(id);
+      
+    }
+    }, []);
+
+ 
+  
+
+ 
+    
+  
+
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/product/getprodpic');
-      setProducts(response.data);
-      
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
+      const filteredUsers = response.data;
+      setProducts(filteredUsers);
+      console.log(filteredUsers,'cikon');
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error fetching users:', error);
     }
   };
 

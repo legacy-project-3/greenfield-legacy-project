@@ -1,3 +1,25 @@
+    "use client";
+    import { useSearchParams } from "next/navigation";
+
+
+    export default function UpdateProduct(){
+
+        const searchParams = useSearchParams();
+        const product:any = searchParams.get('product');
+        const productData:any = JSON.parse(product);
+        console.log(productData,'cikon');
+
+        return(
+            <div>
+                <h1>Update Product</h1>
+            </div>
+        )
+
+
+
+}
+
+
 // "use client";
 // import React from "react";
 

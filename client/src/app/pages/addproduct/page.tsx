@@ -3,6 +3,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import { jwtDecode } from "jwt-decode"
+
 
 const Addproduct = ()=>{
 
@@ -46,13 +48,17 @@ const Addproduct = ()=>{
   }, []);
 
   const addProduct = ()=>{
+    const token =localStorage.getItem("token") 
+    const decodedToken = jwtDecode(token)
+    
+    const userid = decodedToken.userId 
     axios.post("http://localhost:5000/product/add", {
       name: name,
       description: description,
       quantity: quantity,
       price: price,
       categoryId: categoryId,
-      userId:2
+      userId:userid
     }).then((res:any)=>{
       const productId:number = res.data.id
       imagePreview.forEach((el)=>{

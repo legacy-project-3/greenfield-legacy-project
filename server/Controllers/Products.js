@@ -64,8 +64,10 @@ module.exports ={
     const userid = req.params.userId;
 
     try {
-        
-        const products = await Product.findAll({ where: { userId: userid },include:{model:Image}});
+
+        const products = await Product.findAll({ where: { userId: userid },include:[{model:Image},{model:Category}]});
+
+
         
 
         if (products.length === 0) {
