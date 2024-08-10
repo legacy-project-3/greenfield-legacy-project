@@ -64,8 +64,9 @@ module.exports ={
     const userid = req.params.userId;
 
     try {
-        // Assuming Product is your Sequelize model
+
         const products = await Product.findAll({ where: { userId: userid },include:[{model:Image},{model:Category}]});
+
 
         
 
@@ -110,5 +111,18 @@ getAllProductByCategories : async(req,res)=>{
         res.status(404).send(err)
 
     }
-}}
+},
+
+getDetailForOneProd: async (req, res)=> {
+    const id = req.params.id
+    try {
+        const product = await Product.findAll({ where: { id: id },include:{model:Image}})
+        res.status(200).send(product)
+    }
+    catch(err) {
+        res.status(500).send(err)
+    }
+}
+
+}
 

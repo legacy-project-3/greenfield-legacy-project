@@ -13,6 +13,7 @@ const Login: React.FC = () => {
   const handleLogIn = async (): Promise<void> => {
     const user = { email, password };
 
+
     try {
       const response:any = await axios.post('http://127.0.0.1:5000/users/login', user);
       localStorage.setItem("token", response.data.token);
@@ -34,6 +35,7 @@ const Login: React.FC = () => {
     } catch (err) {
       console.log(err);
     }
+
   };
 
   return (
