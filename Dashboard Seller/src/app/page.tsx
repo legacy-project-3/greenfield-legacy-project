@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <>
       <DefaultLayout>
-        <ECommerce userId={userid} />
+        <ECommerce />
       </DefaultLayout>
     </>
   );
