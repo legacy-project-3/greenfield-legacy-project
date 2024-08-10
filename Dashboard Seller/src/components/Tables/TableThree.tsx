@@ -15,15 +15,15 @@ const TableThree:React.FC<> = () => {
   const [products, setProducts] = useState<[]>([])
   const [id, setId] = useState<string>("");
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if(token){
-    const decodedToken:any = jwtDecode(token);
-    setId(decodedToken.id);
-      console.log(id);
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if(token){
+  //   const decodedToken:any = jwtDecode(token);
+  //   setId(decodedToken.id);
+  //     console.log(id);
       
-    }
-    }, []);
+  //   }
+  //   }, []);
 
  
   
@@ -34,7 +34,7 @@ const TableThree:React.FC<> = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/15`);
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${localStorage.getItem("token")}`);
       const filteredUsers = response.data;
       setProducts(filteredUsers);
       

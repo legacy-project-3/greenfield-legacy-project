@@ -4,6 +4,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from 'axios'
 import { jwtDecode } from "jwt-decode"
+import Link from "next/link";
+
 
 
 const Addproduct = ()=>{
@@ -48,7 +50,7 @@ const Addproduct = ()=>{
   }, []);
 
   const addProduct = ()=>{
-    const token =localStorage.getItem("token") 
+    const token:any =localStorage.getItem("token") 
     const decodedToken = jwtDecode(token)
     
     const userid = decodedToken.userId 
@@ -58,7 +60,9 @@ const Addproduct = ()=>{
       quantity: quantity,
       price: price,
       categoryId: categoryId,
-      userId:userid
+      userId:userid,
+      color:'black',
+      rating:1
     }).then((res:any)=>{
       const productId:number = res.data.id
       imagePreview.forEach((el)=>{
@@ -80,9 +84,9 @@ const Addproduct = ()=>{
         <div className="bg-white border border-4 rounded-lg shadow relative m-10">
         <div className="flex items-start justify-between p-5 border-b rounded-t">
           <h3 className="text-xl font-semibold">Add Product</h3>
-          <button
+         <Link href={{pathname:"http://localhost:3002",query:{userid:localStorage.getItem("token")}}}> <button
             type="button"
-            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-9000 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           >
             <svg
               className="w-5 h-5"
@@ -97,6 +101,7 @@ const Addproduct = ()=>{
               ></path>
             </svg>
           </button>
+          </Link>
         </div>
   
         <div className="p-6 space-y-6">
