@@ -64,14 +64,9 @@ module.exports ={
     const userid = req.params.userId;
 
     try {
-<<<<<<< HEAD
         // Assuming Product is your Sequelize model
         const products = await Product.findAll({ where: { userId: userid },include:[{model:Image},{model:Category}]});
 
-=======
-        
-        const products = await Product.findAll({ where: { userId: userid },include:{model:Image}});
->>>>>>> 54070e133c361b0176bbe0f8b5e7bdacdd3a05cb
         
 
         if (products.length === 0) {

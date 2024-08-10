@@ -11,17 +11,25 @@ const TableTwo = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10;
 
-  const [id, setId] = useState<string>("");
+  // const [id, setId] = useState<string>("");
+  // console.log(id,"id");
+  // const fetchToken=async()=>{
+  //   try{
+  //     const token = await localStorage.getItem("token");
+  //     if(token){
+  //     const decodedToken:any = await  jwtDecode(token);
+  //     setId(decodedToken.id);
+  //       console.log(id);
+        
+  //     }
+  //   }catch(error){
+  //     console.log(error);
+  //   }
+  // }
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if(token){
-    const decodedToken:any = jwtDecode(token);
-    setId(decodedToken.id);
-      console.log(id);
-      
-    }
-    }, []);
+  // useEffect(() => {
+  //   fetchToken()
+  //   }, []);
 
  
   
@@ -32,7 +40,7 @@ const TableTwo = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${localStorage.getItem("token")}`);
       const filteredUsers = response.data;
       setProducts(filteredUsers);
       console.log(filteredUsers,'cikon');
