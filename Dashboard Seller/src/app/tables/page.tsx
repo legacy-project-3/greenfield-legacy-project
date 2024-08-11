@@ -15,7 +15,7 @@ const TablesPage = () => {
 
       <div className="flex flex-col gap-10">
         <TableThree/>
-        <TableTwo />
+        {/* <TableTwo /> */}
       </div>
     </DefaultLayout>
   );
