@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { Rating } from "@material-tailwind/react";
+import Link from "next/link";
 
 
 
@@ -17,7 +18,7 @@ const TableThree = ({id , firstName , lastName}: {id: string , firstName: string
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:3000/product/prodimage/${id}`);
+      const response = await axios.get(`http://127.0.0.1:5000/product/prodimage/${id}`);
       const filteredUsers = response.data;
       setProducts(filteredUsers);
       
@@ -33,7 +34,7 @@ console.log(products);
   
 const handleDelete = async (id:string) => {
   try { 
-    const response = await axios.delete(`http://127.0.0.1:3000/product/delete/${id}`);
+    const response = await axios.delete(`http://127.0.0.1:5000/product/delete/${id}`);
     fetchProducts();
     console.log(response);
   } catch (error) {
@@ -114,7 +115,7 @@ const handleDelete = async (id:string) => {
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
               <div className="flex items-center space-x-3.5">
-                <button className="hover:text-primary">
+                <Link href={{pathname:`http://localhost:3000/pages/updateproduct`,query:{product:JSON.stringify(product)}}}><button className="hover:text-primary">
                   <svg
                     className="fill-current"
                     width="18"
@@ -132,7 +133,7 @@ const handleDelete = async (id:string) => {
                       fill=""
                     />
                   </svg>
-                </button>
+                </button></Link>
                 <button className="hover:text-primary" onClick={() => handleDelete(product.id)}>
                   <svg
                     className="fill-current"

@@ -12,7 +12,7 @@ const TableTwo = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:3000/product/getprodpic');
+      const response = await axios.get('http://127.0.0.1:5000/product/getprodpic');
       setProducts(response.data);
       
     } catch (error) {

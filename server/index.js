@@ -6,11 +6,11 @@ const userRoute = require("./routes/UserRout.js");
 const imageRouter= require('./routes/imageRoute.js')
 const cartRouter = require ('./routes/Cartroute.js')
 const whishlistrouter= require('./routes/Whishlistroute.js')
-const PORT = 3000;
+const PORT = 5000;
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use("/images", imageRouter)
 app.use('/category',categoryRoute)
 app.use('/product',productRoute)
