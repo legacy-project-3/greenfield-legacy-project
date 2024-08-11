@@ -1,9 +1,10 @@
 "use client"
-
 import React ,{useState}from "react";
 
 import axios from'axios'
 import { jwtDecode } from "jwt-decode";
+
+import Swal from 'sweetalert2';
 
 function SignUp() {
 
@@ -15,7 +16,37 @@ var x :string
 
 
 
-const handlesign = ()=>{
+
+
+  const handlesign = async () => {
+    
+      
+      const inputOptions = new Promise<{ [key: string]: string }>((resolve) => {
+        setTimeout(() => {
+          resolve({
+            "Seller": "Seller",
+            "Buyer": "Buyer"
+          });
+        }, 1000);
+      });
+  
+      const { value: selectedRole } = await Swal.fire({
+        title: "Select please",
+        input: "radio",
+        inputOptions: inputOptions,
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to choose something!";
+          }
+          return null;
+        }
+      });
+
+
+
+
+
+
   const newuser={
     email:email,
     password:password,

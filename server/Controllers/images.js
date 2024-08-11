@@ -1,5 +1,15 @@
 
 const {Image} = require ("../indexdatabase.js")
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+
+
+
 
 const addImage = async (req, res)=>{
     try {
@@ -25,23 +35,60 @@ const getImages= async (req, res)=> {
     }
 }
 
- const updateImage = async(req,res)=>{
-    const { id } = req.params
-    const { Url } = req.body
+//  const updateImage = async(req,res)=>{
+//     const { id } = req.params
+//     const { Url } = req.body
+  
+//     try {
+//       const updated = await Image.update(
+//         { Url},
+//         { where: { id } }
+//       )
+//         res.status(200).send(updated);
+     
+//     } 
+//     catch (error) {
+//       console.error(error);
+//       res.status(404).send(error);
+//     }
+// }
+
+const updateImage = async (req, res) => {
+    const { id } = req.params;
+    const { Url } = req.body;
   
     try {
+       
+      const result = await cloudinary.uploader.upload(Url, {
+        folder: 'images', // Optional: specify the folder in Cloudinary
+      });
+  
+       
       const updated = await Image.update(
-        { Url},
+        { Url: result.secure_url },
         { where: { id } }
-      )
-        res.status(200).send(updated);
-     
-    } 
-    catch (error) {
+      );
+  
+      res.status(200).send(updated);
+
+
+    
+
+
+    } catch (error) {
       console.error(error);
-      res.status(404).send(error);
+      res.status(500).send({ error: 'Failed to update image' });
     }
-}
+  };
+
+
+
+
+
+
+
+
+
 
  const deleteImage = async(req,res)=>{
     try{

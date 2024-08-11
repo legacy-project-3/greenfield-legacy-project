@@ -1,37 +1,79 @@
-"use client"
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+"use client";
+import React, { useState, useEffect,FormEvent, ChangeEvent } from 'react';
 import './EditProfile.css';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
-const EditProfile: React.FC = () => {
-  const [name, setName] = useState<string>("");
-  const [last, setLast] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const [currentPassword, setCurrentPassword] = useState<string>("");
-  const [newPassword, setNewPassword] = useState<string>("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
+const EditProfile: React.FC = () => { 
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [currentPassword, setCurrentPassword] = useState<string>('');
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => setName(e.target.value);
-  const handleLastChange = (e: ChangeEvent<HTMLInputElement>) => setLast(e.target.value);
-  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  const handleAddressChange = (e: ChangeEvent<HTMLInputElement>) => setAddress(e.target.value);
-  const handleCurrentPasswordChange = (e: ChangeEvent<HTMLInputElement>) => setCurrentPassword(e.target.value);
-  const handleNewPasswordChange = (e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value);
-  const handleConfirmNewPasswordChange = (e: ChangeEvent<HTMLInputElement>) => setConfirmNewPassword(e.target.value);
+   
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode<any>(token);
+      setFirstName(decodedToken.firstName);
+      setLastName(decodedToken.lastName);
+      setEmail(decodedToken.email);
+      setAddress(decodedToken.address || '');
+      setUserId(decodedToken.userId);
+    }
+  }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+
+  
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value);
+  const handleLastChange = (e: React.ChangeEvent<HTMLInputElement>) => setLastName(e.target.value);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => setAddress(e.target.value);
+  const handleCurrentPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setCurrentPassword(e.target.value);
+  const handleNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value);
+  const handleConfirmNewPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value);
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // Add logic to save the data here
-    console.log('Form submitted with data:', {
-      name,
-      last,
-      email,
-      address,
-      currentPassword,
-      newPassword,
-      confirmNewPassword
-    });
-    // Additional logic for validation, API calls, etc.
+    try {
+      const response = await axios.put(`http://localhost:3000/user/update/${userId}`, {
+        firstName,
+        lastName,
+        email,
+        address,
+      });
+      console.log('Profile updated:', response.data);
+      // Handle success (e.g., show a success message)
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      // Handle error (e.g., show an error message)
+    }
+  };
+
+  const handlePasswordChange = async (e: FormEvent) => {
+    e.preventDefault();
+    if (newPassword !== confirmPassword) {
+      alert("New passwords don't match");
+      return;
+    }
+    try {
+      const response = await axios.put(`http://localhost:3000/user/update/${userId}`, {
+        currentPassword,
+        newPassword,
+      });
+      console.log('Password updated:', response.data);
+      
+
+    } catch (error) {
+      console.error('Error updating password:', error);
+      
+      
+    }
   };
 
   return (
@@ -66,22 +108,22 @@ const EditProfile: React.FC = () => {
           <div className="form-group">
             <div className="form-control">
               <label>First Name</label>
-              <input   style={{color:"black"}} type="text" value={name} onChange={handleNameChange} />
+              <input style={{color:"black"}} type="text" value={firstName} onChange={handleNameChange} />
             </div>
             <div className="form-control">
               <label>Last Name</label>
-              <input style={{color:"black"}}  type="text" value={last} onChange={handleLastChange} />
+              <input style={{color:"black"}} type="text" value={lastName} onChange={handleLastChange} />
             </div>
           </div>
 
           <div className="form-group2">
             <div className="form-control">
               <label>Email</label>
-              <input   style={{color:"black"}} type="email" value={email} onChange={handleEmailChange} />
+              <input style={{color:"black"}} type="email" value={email} onChange={handleEmailChange} />
             </div>
             <div className="form-control">
               <label>Address</label>
-              <input   style={{color:"black"}} type="text" value={address} onChange={handleAddressChange} />
+              <input style={{color:"black"}} type="text" value={address} onChange={handleAddressChange} />
             </div>
           </div>
 
@@ -98,7 +140,7 @@ const EditProfile: React.FC = () => {
                 <input style={{color:"black"}} className="input-field" type="password" placeholder='New Password' value={newPassword} onChange={handleNewPasswordChange} />
               </div>
               <div className="form-control">
-                <input  style={{color:"black"}} className="input-field" type="password" placeholder='Confirm New Password' value={confirmNewPassword} onChange={handleConfirmNewPasswordChange} />
+                <input style={{color:"black"}} className="input-field" type="password" placeholder='Confirm New Password' value={confirmPassword} onChange={handleConfirmNewPasswordChange} />
               </div>
             </div>
           </div>
@@ -114,4 +156,3 @@ const EditProfile: React.FC = () => {
 };
 
 export default EditProfile;
-
