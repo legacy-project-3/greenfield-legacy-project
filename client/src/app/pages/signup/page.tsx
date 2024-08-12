@@ -6,46 +6,81 @@ import axios from'axios'
 import { jwtDecode } from "jwt-decode";
 import Footer from "../../components/footer/page";
 import Navbar from "../../components/navbar/page";
+import Swal from 'sweetalert2';
+
 function SignUp() {
 
 const [name,setname]=useState<string> ('')
 const [email,setemail]=useState<string>('')
 const [password,setapassword]=useState<string>('')
+// const [role,setrole]=useState<string>('')
 
 const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
 
 const handlelogin = async () => {
-  const newuser = {
-    email: email,
-    password: password,
-    role: "seller",
-    address: "address",
-    firstName: name,
-    lastname: "lastname",
-    status: "active"
-  };
-
-  try {
-    const response = await axios.post('http://127.0.0.1:5000/users/register', newuser);
-    localStorage.setItem("token", response.data.token);
-    const decodedToken: any = jwtDecode(response.data.token);
-    console.log(decodedToken.userId,"decodedToken");
-    
-
-    let url;
-    switch (decodedToken.role) {
-      case "admin":
-        url = "http://localhost:3001/";
-        break;
-      case "seller":
-        url = `http://localhost:3002/`;
-        break;
-      default:
-        url = "http://localhost:3000/";
+ 
+  const { value: role } = await Swal.fire({
+    title: 'Select your role',
+    input: 'radio',
+    inputOptions: {
+      'buyer': 'buyer',
+      'seller': 'seller'
+    },
+    inputValidator: (value) => {
+      if (!value) {
+        return 'You need to choose a role!'
+      }
     }
-    setRedirectUrl(url);
-  } catch (err) {
-    console.log(err);
+  });
+
+  if (role) {
+    console.log(role,'role');
+    const newuser = {
+      email: email,
+      password: password,
+      role: role,
+      address: "address",
+      firstName: name,
+      lastname: "lastname",
+      status: "active"
+    };
+
+    try {
+      const response:any = await axios.post('http://127.0.0.1:5000/users/register', newuser);
+      localStorage.setItem("token", response.data.token);
+      const decodedToken: any = jwtDecode(response.data.token)
+      console.log(decodedToken.userId,"decodedToken");
+      
+
+      let url;
+      switch (decodedToken.role) {
+        case "admin":
+          url = "http://localhost:3001/";
+          break;
+        case "seller":
+          url = `http://localhost:3002/`;
+          break;
+        default:
+          url = "http://localhost:3000/";
+      }
+
+      // Show success message
+      await Swal.fire({
+        icon: 'success',
+        title: 'Account created successfully!',
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+      setRedirectUrl(url);
+    } catch (err) {
+      console.log(err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+      });
+    }
   }
 };
 
