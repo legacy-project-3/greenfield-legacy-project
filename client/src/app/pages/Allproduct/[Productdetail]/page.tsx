@@ -1,14 +1,18 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faHeartRegular, faStar, faStarHalfAlt } from "@fortawesome/free-regular-svg-icons";
+import { faStar as faStarSolid } from "@fortawesome/free-solid-svg-icons";
 import { useSearchParams } from "next/navigation";
+import Navbar from "../../../components/navbar/page";
+import Footer from "../../../components/footer/page";
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode"
 
 const Productdetail = () => {
   const params = useSearchParams();
   const id = params.get("id");
-  console.log("id", id);
+  
 
   const [oneProd, setOneprod] = useState<Prod | null>(null);
   const [mainImage, setMainimage] = useState<string>("");
@@ -82,118 +86,129 @@ const Productdetail = () => {
     const emptyStars = 5 - fullStars - (halfStars ? 1 : 0);
 
     return (
-      <>
+      <div className="flex">
         {[...Array(fullStars)].map((_, i) => (
-          <svg
+          <FontAwesomeIcon
             key={`full-${i}`}
-            className="w-5 fill-yellow-600"
-            viewBox="0 0 14 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-          </svg>
+            icon={faStarSolid}
+            className="text-yellow-500"
+          />
         ))}
         {halfStars && (
-          <svg
+          <FontAwesomeIcon
             key="half"
-            className="w-5 fill-yellow-600"
-            viewBox="0 0 14 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-            <rect x="7" y="0" width="7" height="13" fill="#CED5D8" />
-          </svg>
+            icon={faStarHalfAlt}
+            className="text-yellow-500"
+          />
         )}
         {[...Array(emptyStars)].map((_, i) => (
-          <svg
+          <FontAwesomeIcon
             key={`empty-${i}`}
-            className="w-5 fill-[#CED5D8]"
-            viewBox="0 0 14 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z" />
-          </svg>
+            icon={faStarEmpty}
+            className="text-gray-400"
+          />
         ))}
-      </>
+      </div>
     );
   };
 
+  const addToCart = (id: number) => {
+    const token = localStorage.getItem("token")
+    const decodedToken = jwtDecode(token)
+    const userid = decodedToken.userId
+    
+    axios.post("http://localhost:5000/cart/add", {
+      userId: userid,
+      productId: id
+    }).then(() => {
+      console.log("product added successfully to the cart")
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const addToWhishlist = (id:number) => {
+    const token = localStorage.getItem("token")
+    const decodedToken = jwtDecode(token)
+    const userid = decodedToken.userId
+    
+    axios.post("http://localhost:5000/whishlist/add", {
+      userId: userid,
+      productId: id
+    }).then(() => {
+      console.log("product added successfully to the whishlist")
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
   return (
-    <div className="font-sans">
-      <div className="p-4 lg:max-w-5xl max-w-lg mx-auto">
-        <div className="flex gap-6">
-          {/* Left Section: Images */}
-          <div className="flex gap-4">
-            <div className="flex flex-col gap-4">
-              {oneProd?.images.slice(1).map((image, index) => (
-                <img
-                  key={index}
-                  src={image.Url}
-                  alt={`Product ${index + 1}`}
-                  style={{ width: "170px", height: "138px", objectFit: "cover" }}
-                  onClick={() => handleImageClick(image.Url)}
-                />
-              ))}
-            </div>
-            <img
-              src={mainImage}
-              alt="Main Product"
-              style={{ width: "500px", height: "600px", objectFit: "cover" }}
-            />
-          </div>
-
-          {/* Right Section: Product Information */}
-          <div className="flex flex-col justify-center">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {oneProd?.name}
-            </h2>
-
-            <div className="flex space-x-2 mt-4">
-              {oneProd?.rating && renderStars(oneProd.rating)}
-            </div>
-
-            <div className="flex flex-wrap gap-4 mt-4">
-              <p className="text-gray-800 text-xl font-bold">
-                ${oneProd?.price}
-              </p>
-            </div>
-
-            <div className="mt-8">
-              <div>{oneProd?.description}</div>
-            </div>
-
-            {/* Quantity Selector */}
-            <div className="flex items-center gap-4 mt-4">
-              <div className="flex items-center gap-4">
-                <button className="text-xl font-bold px-4 py-2 bg-[#DB4444] text-white p-4 rounded border border-gray-400">
-                  -
-                </button>
-                <span className="text-xl font-bold ">1</span>
-                <button className="text-xl font-bold px-4 py-2 bg-[#DB4444] text-white p-4 rounded border border-gray-400">
-                  +
-                </button>
+    <div>
+      <Navbar/>
+      <div className="font-sans" style={{marginBottom:"50px"}}>
+        <div className="p-4 lg:max-w-5xl max-w-lg mx-auto">
+          <div className="flex gap-6">
+            <div className="flex gap-4">
+              <div className="flex flex-col gap-4">
+                {oneProd?.images.slice(1).map((image, index) => (
+                  <img
+                    key={index}
+                    src={image.Url}
+                    alt={`Product ${index + 1}`}
+                    style={{ width: "170px", height: "138px", objectFit: "cover" }}
+                    onClick={() => handleImageClick(image.Url)}
+                  />
+                ))}
               </div>
-              <button
-                style={{
-                  backgroundColor: "#DB4444",
-                  width: "150px",
-                  height: "56px",
-                  color: "white",
-                }}
-              >
-                Add to Cart
-              </button>
-              <FontAwesomeIcon
-                icon={faHeartRegular}
-                className="text-2xl text-black"
+              <img
+                src={mainImage}
+                alt="Main Product"
+                style={{ width: "500px", height: "600px", objectFit: "cover" }}
               />
+            </div>
+
+            <div className="flex flex-col justify-center">
+              <h2 className="text-2xl font-bold text-gray-800">
+                {oneProd?.name}
+              </h2>
+
+              <div className="flex space-x-2 mt-4">
+                {oneProd?.rating && renderStars(oneProd.rating)}
+              </div>
+
+              <div className="flex flex-wrap gap-4 mt-4">
+                <p className="text-gray-800 text-xl font-bold">
+                  ${oneProd?.price}
+                </p>
+              </div>
+
+              <div className="mt-8">
+                <div>{oneProd?.description}</div>
+              </div>
+
+              <div className="flex items-center gap-4 mt-4">
+                <button
+                  style={{
+                    backgroundColor: "#DB4444",
+                    width: "150px",
+                    height: "56px",
+                    color: "white",
+                  }}
+                  onClick={()=>{addToCart(id)}}
+                >
+                  Add to Cart
+                </button>
+                <FontAwesomeIcon
+                  icon={faHeartRegular}
+                  className="text-2xl text-black"
+                  onClick={()=>{addToWhishlist(id)}}
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

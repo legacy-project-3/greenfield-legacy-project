@@ -57,10 +57,22 @@ const updateCartforUser = async (req, res) => {
     }
 
 }
+
+const deleteFromCart = async (req, res)=>{
+    try{
+        const  id=req.params.id
+         const deleted=await Cart.destroy({where : { id:id}})
+         res.status(200).send("deleted successfully")
+     }
+     catch(err){
+         res.status(500).send(err)
+     }
+}
 module.exports = {
     addCart,
     getAllCart,
     getCartforUser,
-    updateCartforUser
+    updateCartforUser,
+    deleteFromCart
 
 }

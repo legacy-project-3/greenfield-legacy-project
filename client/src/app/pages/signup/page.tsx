@@ -4,7 +4,8 @@ import React ,{useState,useEffect}from "react";
 import Link from "next/link";
 import axios from'axios'
 import { jwtDecode } from "jwt-decode";
-
+import Footer from "../../components/footer/page";
+import Navbar from "../../components/navbar/page";
 function SignUp() {
 
 const [name,setname]=useState<string> ('')
@@ -53,7 +54,9 @@ const handlelogin = async () => {
 
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center gap-16 bg-white">
+    <div>
+      <Navbar/>
+      <div className="w-full min-h-screen flex items-center justify-center gap-16 bg-white">
       
       <img
         style={{ width: "600px", height: "450px" }}
@@ -115,7 +118,11 @@ const handlelogin = async () => {
           </a>
         </span>
       </div>
+      
     </div>
+    <Footer/>
+    </div>
+    
   );
 }
 

@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import Link from "next/link";
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
+import Navbar from "../../components/navbar/page";
+import Footer from "../../components/footer/page";
+
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -39,7 +42,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div>
+      <Navbar/>
+       <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="flex w-full max-w-6xl items-center justify-center gap-16 p-8">
         <div className="hidden md:flex">
           <img
@@ -88,6 +93,9 @@ const Login: React.FC = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </div>
+   
   );
 };
 

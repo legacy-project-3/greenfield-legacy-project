@@ -19,7 +19,7 @@ const Carousel = () => {
   }, []);
 
   return (
-    <section className="relative bg-black text-white rounded-lg overflow-hidden mb-8">
+    <section className="relative bg-black text-white  overflow-hidden mb-8">
       <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
         {slides.map((slide, index) => (
           <div key={index} className="w-full flex-shrink-0">
