@@ -92,7 +92,7 @@ const Whishlist = () =>{
       }
       const fetchdata = ()=>{
         
-        axios.get<ProdResponse[]>(`http://localhost:5000/whishlist/whishOneuser/${userId}`)
+        axios.get<ProdResponse[]>(`http://localhost:5000/whishlist/whishOneuser/${jwtDecode(localStorage.getItem("token")).userId}`)
           .then((res) => {
             const data: ProdResponse[] = res.data
             const newdata: newdataa[] = data.map((el)=>{

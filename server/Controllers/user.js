@@ -57,12 +57,12 @@ deleteUser= async (req, res) => {
 },
 
    addUser = async (req, res)=>{
-    const { username, email, password, role  } = req.body
+    const { firstName, email, password, role  } = req.body
     try {
         if(isEmailValid(email)) {
         const hashedPassword = await bcrypt.hash(password, 10)
         const newuser= await User.create({
-            username,
+            firstName,
             email, 
             password: hashedPassword,
             role
