@@ -66,7 +66,7 @@ const Cart = () => {
  
   
  
-  axios.get(`http://localhost:5000/cart/getOne/${userId}`)
+  axios.get(`http://localhost:5000/cart/getOne/${jwtDecode(localStorage.getItem("token")).userId}`)
       .then((res) => {
         const dataa: Prosss[] = res.data;
         const newdata: Res [] = dataa.map((el) => {

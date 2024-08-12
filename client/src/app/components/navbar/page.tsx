@@ -95,7 +95,7 @@ const Navbar = () => {
                                     {isOpen && (
                                         <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg" style={{ top: '100%' }}>
                                             { localStorage.getItem("token") && <div>
-                                            <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Manage my Account</a>
+                                            <Link href="/pages/EditProfile" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Manage my Account</Link>
                                             <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My order</a>
                                             <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My cancellations</a>
                                             </div>}
