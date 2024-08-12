@@ -4,11 +4,12 @@ import "./cart.css";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"
 import Swal from "sweetalert2";
-
-
+import Footer from "../../components/footer/page";
+import Navbar from "../../components/navbar/page";
+import Link from "next/link";
 const Cart = () => {
 
-    interface Pro {
+    interface Prosss {
         id: number,
         quantity: number,
         createdAt: string;
@@ -51,20 +52,25 @@ const Cart = () => {
     }
   const [cartdata, setCartdata] = useState<Res[]>([]);
   const [refresh, setRefresh] = useState(false);
-  
+  const [userId, setUserId] = useState<number>(0)
+  useEffect(()=>{
+    const token =localStorage.getItem("token") 
+      const decodedToken = jwtDecode(token)
+      
+      const userid = decodedToken.userId 
+      setUserId(userid)
+   }, [])
   
 
   useEffect(() => {
- const token =localStorage.getItem("token") 
-  const decodedToken = jwtDecode(token)
+ 
   
-  
-  const userid:number = decodedToken.userId 
-  console.log("userid", userid)   
-  axios.get(`http://localhost:5000/cart/getOne/${userid}`)
+ 
+  axios.get(`http://localhost:5000/cart/getOne/${userId}`)
       .then((res) => {
-        const dataa: Pro[] = res.data;
+        const dataa: Prosss[] = res.data;
         const newdata: Res [] = dataa.map((el) => {
+          
           return {
             id: el.id,
             name: el.product.name,
@@ -125,69 +131,78 @@ const Cart = () => {
   );
 
   return (
-    
-    <div className="cartpage">
+    <div>
+      <Navbar/>
+       <div className="cartpage" style={{marginBottom:"50px"}}>
         
-      <div className="home-cart">
-        <div className="home">
-          Home /
+        <div className="home-cart">
+          <div className="home">
+            Home /
+          </div>
+          <div>
+            Cart
+          </div>
         </div>
-        <div>
-          Cart
-        </div>
-      </div>
-      <div className="cart-container">
-        <div className="cart-header">
-          <div className="cart-cell">Product</div>
-          <div className="cart-cell">Price</div>
-          <div className="cart-cell">Quantity</div>
-          <div className="cart-cell">Subtotal</div>
-          <div className="cart-cell">Delete</div>
-        </div>
-        {cartdata.map((item) => (
-          <div key={item.id} className="cart-row">
-            <div className="cart-cell product-cell">
-              <img src={item.image} alt={item.name} className="product-image" />
-              <div className="name">{item.name}</div>
-            </div>
-            <div className="cart-cell">${item.price}</div>
-            <div className="cart-cell">
-              <div className="item-controls">
-                <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+        <div className="cart-container" style={{marginBottom:"100px"}}>
+          <div className="cart-header">
+            <div className="cart-cell">Product</div>
+            <div className="cart-cell">Price</div>
+            <div className="cart-cell">Quantity</div>
+            <div className="cart-cell">Subtotal</div>
+            <div className="cart-cell">Delete</div>
+          </div>
+          {cartdata.map((item) => (
+            <div key={item.id} className="cart-row">
+              <div className="cart-cell product-cell">
+                <img src={item.image} alt={item.name} className="product-image" />
+                <div className="name">{item.name}</div>
+              </div>
+              <div className="cart-cell">${item.price}</div>
+              <div className="cart-cell">
+                <div className="item-controls">
+                  <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
+                </div>
+              </div>
+              <div className="cart-cell">${item.price * item.quantity}</div>
+              <div className="cart-cell">
+                <button  onClick={() => deleteProduct(item.id)}>Delete</button>
               </div>
             </div>
-            <div className="cart-cell">${item.price * item.quantity}</div>
-            <div className="cart-cell">
-              <button  onClick={() => deleteProduct(item.id)}>Delete</button>
+          ))}
+          <div className="shop-cart">
+            <div className="coupon">
+              <input className="inputcoupon" placeholder="Coupon code"></input>
+              <button className="checkout">Apply coupon</button>
             </div>
-          </div>
-        ))}
-        <div className="shop-cart">
-          <div className="coupon">
-            <input className="inputcoupon" placeholder="Coupon code"></input>
-            <button className="checkout">Apply coupon</button>
-          </div>
-          <div className="total">
-            <p className="ptotal">Cart total</p>
-            <div className="subtotal">
-              <div className="subtotal-total">Subtotal</div>
-              <div className="subtotal-not">${total}</div>
+            <div className="total">
+              <p className="ptotal">Cart total</p>
+              <div className="subtotal">
+                <div className="subtotal-total">Subtotal</div>
+                <div className="subtotal-not">${total.toFixed(3)}</div>
+              </div>
+              <div className="subtotal">
+                <div className="subtotal-total">Shipping</div>
+                <div className="subtotal-not">free</div>
+              </div>
+              <div className="subtotal">
+                <div className="subtotal-total">Total</div>
+                <div className="subtotal-not">${total.toFixed(3)}</div>
+              </div>
+              <Link href={{pathname:"/pages/Checkout", query :{total: total.toString()}}}>
+              <button className="checkout">Proceed to checkout</button>
+              </Link>
+             
             </div>
-            <div className="subtotal">
-              <div className="subtotal-total">Shipping</div>
-              <div className="subtotal-not">free</div>
-            </div>
-            <div className="subtotal">
-              <div className="subtotal-total">Total</div>
-              <div className="subtotal-not">${total}</div>
-            </div>
-            <button className="checkout">Proceed to checkout</button>
           </div>
         </div>
+        
       </div>
+      <Footer/>
     </div>
+    
+   
   );
 };
 

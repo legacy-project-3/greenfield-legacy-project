@@ -6,6 +6,7 @@ const userRoute = require("./routes/UserRout.js");
 const imageRouter= require('./routes/imageRoute.js')
 const cartRouter = require ('./routes/Cartroute.js')
 const whishlistrouter= require('./routes/Whishlistroute.js')
+const mailrouter= require("./routes/mailroute.js")
 const PORT = 5000;
 const app = express();
 
@@ -18,6 +19,7 @@ app.use('/users',userRoute)
 app.use("/images", imageRouter)
 app.use("/cart", cartRouter)
 app.use("/whishlist", whishlistrouter)
+app.use(mailrouter)
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
 });

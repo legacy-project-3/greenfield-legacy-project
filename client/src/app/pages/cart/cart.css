@@ -1,119 +1,100 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 .cart-container {
     padding: 20px;
-    margin-left: 150px;
-    margin-top: 90px;
-    width: 1170px;
-    height: 840px;
+    margin: 90px auto 50px;
+    max-width: 1170px;
+    width: 95%;
     box-sizing: border-box;
-    overflow-y: auto; 
     font-family: 'Poppins', sans-serif;
-  }
-  
-  .cart-header,
-  .cart-row {
+}
+
+.cart-header,
+.cart-row {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
-    width: 100%;
-    height: 60px;
-    padding: 5px;
+    padding: 15px;
     justify-content: space-between;
     align-items: center;
     box-shadow: 0 4px 6px rgba(69, 69, 69, 0.1);
     box-sizing: border-box;
-  }
-  
-  .cart-header {
+}
+
+.cart-header {
     font-weight: bold;
-  }
-  
-  .cart-cell {
+}
+
+.cart-cell {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    
-  }
-  
-  .name {
-    margin-left: 5px;
-   
-  }
-  
-  
-  .item-controls {
+}
+
+.name {
+    margin-left: 10px;
+}
+
+.item-controls {
     display: flex;
     align-items: center;
-  }
-  
-  .item-controls button {
+}
+
+.item-controls button {
     background-color: #484646;
     color: white;
     border: none;
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
     margin: 0 5px;
     transition: background-color 0.3s;
-  }
-  
-  .item-controls button:hover {
+}
+
+.item-controls button:hover {
     background-color: #000000;
-  }
-  
-  .product-cell {
+}
+
+.product-cell {
     display: flex;
     align-items: center;
-    gap: 5px;
-  }
-  
-  .product-image {
+    gap: 10px;
+}
+
+.product-image {
     width: 54px;
     height: 54px;
-  }
-  
-  .shop-cart {
-    height: 324px;
-    width: 100%;
-    box-sizing: border-box;
+    object-fit: cover;
+}
+
+.shop-cart {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     margin-top: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .coupon {
-    height: 56px;
-    width: 517px; 
-    box-sizing: border-box; 
-  }
-  
-  .total {
-    height: auto; 
-    width: 517px; 
+}
+
+
+
+.total {
+    width: 100%;
+    max-width: 400px;
     border: 2px solid black;
-    box-sizing: border-box;
-    padding: 20px; 
+    padding: 20px;
     display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-  }
-  
-  .subtotal {
-    border-bottom: 3px solid rgb(185, 184, 184); 
-    padding: 5px; 
-    margin: 0; 
-    box-sizing: border-box; 
+    flex-direction: column;
+    gap: 15px;
+}
+
+.subtotal {
+    display: flex;
     justify-content: space-between;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .subtotal-total,
-  .subtotal-not {
-    
-  }
-  
-  .checkout {
+    border-bottom: 1px solid rgb(185, 184, 184);
+    padding: 5px 0;
+}
+
+.checkout {
     border: none;
     color: white;
     padding: 15px 32px;
@@ -121,27 +102,75 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 0; 
     cursor: pointer;
     background-color: #e00543;
-  }
-  
-  .inputcoupon{
-    height: 56px;
-    width: 300px;
-  }
-  .coupon{
-    display: flex;
-    justify-content: space-between;
-  } 
+    transition: background-color 0.3s;
+}
 
-  .home-cart {
-    display:flex;
-    margin-left: 150px;
-    margin-top: 50px;
+.checkout:hover {
+    background-color: #c50339;
+}
+
+.inputcoupon {
+    height: 56px;
+    width: 200px;
+    padding: 0 10px;
+}
+
+.home-cart {
+    display: flex;
+    margin: 50px auto 0;
+    max-width: 1170px;
+    width: 95%;
     font-family: 'Poppins', sans-serif;
-  }
-  .cart {
+}
+
+.cart {
     padding-left: 5px;
-  }
-  
+}
+
+@media (max-width: 768px) {
+    .cart-container {
+        padding: 10px;
+    }
+
+    .shop-cart {
+        flex-direction: column;
+    }
+
+    .coupon, .total {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.coupon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.inputcoupon {
+  height: 40px;
+  width: 200px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.checkout, .coupon button {
+  height: 40px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #e00543;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.checkout:hover, .coupon button:hover {
+  background-color: #c50339;
+}

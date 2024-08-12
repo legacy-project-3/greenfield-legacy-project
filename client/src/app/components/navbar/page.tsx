@@ -13,8 +13,8 @@ interface Prod {
 }
 
 
-const Navbar = ({bestSelling}) => {
-    console.log("bestSelling", bestSelling)
+const Navbar = () => {
+    
     const [isOpen, setIsopen] = useState<boolean>(false);
     const toggleDropdown = () => {
         setIsopen(!isOpen);
@@ -37,11 +37,19 @@ const Navbar = ({bestSelling}) => {
                                 Exclusive
                             </div>
                             <ul className="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12">
-                                <li className="hover:underline"><a href="#">Home</a></li>
-                                <li className="hover:underline"><a href="#">Contact</a></li>
-                                <li className="hover:underline"><a href="#">About</a></li>
-                                <li className="hover:underline"><a href="#">Signup</a></li>
-                            </ul>
+                              <li className="hover:underline">
+                              <Link href="/pages/LandingPage">Home</Link>
+                              </li>
+                            <li className="hover:underline">
+                               <Link href="/pages/Contact">Contact</Link>
+                            </li>
+                           <li className="hover:underline">
+                            <Link href="/pages/About">About</Link>
+                           </li>
+                          <li className="hover:underline">
+                             {! localStorage.getItem("token") && <Link href="/pages/signup">Signup</Link>}
+                           </li>
+                           </ul>
                             <div className="max-w-md mx-auto">
                                 <div className="relative flex items-center w-full h-12 overflow-hidden bg-gray-200">
                                     <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -59,7 +67,7 @@ const Navbar = ({bestSelling}) => {
                             </div>
                             <div className="hidden xl:flex items-center space-x-5 relative">
                                 <div className="hover:text-black-200">
-                                    <Link href={{pathname:`/pages/Whishlist`, query: {bestSelling:JSON.stringify(bestSelling)}}}>
+                                    <Link href={{pathname:"/pages/Whishlist"}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                     </svg>
@@ -86,11 +94,14 @@ const Navbar = ({bestSelling}) => {
                                     </div>
                                     {isOpen && (
                                         <div className="absolute right-0 mt-2 py-2 w-48 bg-white rounded-lg shadow-lg" style={{ top: '100%' }}>
+                                            { localStorage.getItem("token") && <div>
                                             <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Manage my Account</a>
                                             <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My order</a>
                                             <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My cancellations</a>
-                                            <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">My reviews</a>
-                                            <a href="#" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</a>
+                                            </div>}
+                                            
+                                            { ! localStorage.getItem("token") && <Link href="/pages/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">Login</Link>}
+                                            {localStorage.getItem("token") && <Link href="/" className="block px-4 py-2 text-gray-800 hover:bg-gray-100"><button onClick={()=>{ localStorage.clear()}}>Logout</button></Link>}
                                         </div>
                                     )}
                                 </a>

@@ -103,7 +103,7 @@ module.exports ={
    
 getAllProductByCategories : async(req,res)=>{
     try{
-        const product=await Product.findAll({where :{categoryId:req.params.id}})
+        const product=await Product.findAll({where :{categoryId:req.params.id}, include: {model: Image} })
         res.status(200).send(product)
     }
     catch(err){
